@@ -22,7 +22,7 @@ export default {
       filterText: '',
       data2: [{
         id: 1,
-        label: 'Level one 1',
+        label: 'Level one 1哈哈',
         children: [{
           id: 4,
           label: 'Level two 1-1',

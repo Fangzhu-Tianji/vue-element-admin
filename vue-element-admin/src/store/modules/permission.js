@@ -42,13 +42,16 @@ const permission = {
   mutations: {
     SET_ROUTERS: (state, routers) => {
       state.addRouters = routers
+      console.log(routers)
       state.routers = constantRouterMap.concat(routers)
+      console.log(state.routers)
     }
   },
   actions: {
     GenerateRoutes({ commit }, data) {
       return new Promise(resolve => {
         const { roles } = data
+        console.log(roles)
         let accessedRouters
         if (roles.includes('admin')) {
           accessedRouters = asyncRouterMap
