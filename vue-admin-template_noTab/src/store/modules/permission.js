@@ -7,16 +7,17 @@ import { asyncRouterMap, constantRouterMap, defaultRouterMap } from '@/router'
  */
 function filterAsyncRouter(roles, routes) {
   for (var i = routes.length - 1; i >= 0; i--) {
-    var a = false
-    for (var j = roles.length - 1; j >= 0; j--) {
-      if (routes[i].meta.name === roles[j].name) {
-        a = true
-        if (routes[i].children && routes[i].children.length > 0) {
-          filterAsyncRouter(roles, routes[i].children)
-        }
+    var targe = roles[routes[i].name]
+    if (targe) {
+      if (targe.is_menu !== 1) {
+        routes[i].hidden = true
       }
-    }
-    if (a === false) {
+      routes[i].meta.title = targe.title
+      routes[i].meta.icon = targe.icon
+      if (routes[i].children && routes[i].children.length > 0) {
+        filterAsyncRouter(roles, routes[i].children)
+      }
+    } else {
       routes.splice(i, 1)
     }
   }
@@ -38,23 +39,7 @@ const permission = {
   actions: {
     GenerateRoutes({ commit }, data) {
       return new Promise(resolve => {
-        // const { roles } = data
-        // 获取后台返回的数据并和accessedRouters进行比较
-        // 例
-        const roles = [
-          {
-            'name': 'Nested'
-          },
-          {
-            'name': 'Menu1'
-          },
-          {
-            'name': 'Form'
-          },
-          {
-            'name': 'Form1'
-          }
-        ]
+        const { roles } = data
         var accessedRouters = asyncRouterMap
         filterAsyncRouter(roles, accessedRouters)
         commit('SET_ROUTERS', accessedRouters)

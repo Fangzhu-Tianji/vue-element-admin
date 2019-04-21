@@ -12,6 +12,7 @@ import '@/styles/index.scss' // global css
 import App from './App'
 import router from './router'
 import store from './store'
+import * as $T from './utils/tools'
 
 import i18n from './lang' // Internationalization
 import '@/icons' // icon
@@ -23,6 +24,7 @@ Vue.use(Element, {
 })
 
 Vue.config.productionTip = false
+Vue.prototype.$T = $T
 
 new Vue({
   el: '#app',
